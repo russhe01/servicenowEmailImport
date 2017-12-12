@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_17179_email_impo.EmailFileImportUtils</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>EmailFileImportUtils</name>
+        <script><![CDATA[var EmailFileImportUtils = Class.create();
+EmailFileImportUtils.prototype = {
+	initialize: function() {
+	},
+	
+	//Create scheduled job to process import
+	scheduleImport: function(dataSourceID, transformMapIDs) {
+		try{
+		var schRec = new GlideRecord("sys_trigger");
+		schRec.initialize();
+		schRec.name = "Load Data Source: " + dataSourceID;
+		schRec.trigger_type = 0;  // Run Once
+		schRec.script = "new global.EmailFileImportUtils().loadImportSet('" + dataSourceID + "', '" + transformMapIDs + "')";
+		var nextAction = new GlideDateTime();
+		nextAction.addSeconds(30);  // 30 seconds should be enough time however this can be changed.
+		schRec.next_action = nextAction;
+		schRec.insert();
+		}
+		catch(err){gs.log("Error detected in SI: EmailFileImportUtils, Function: scheduleImport " +err.message);}
+	},
+	
+	// Get Datasource Record
+	loadImportSet: function(dataSourceID, transformMapIDs) {
+		try{
+		var dataSource = new GlideRecord("sys_data_source");
+		dataSource.get(dataSourceID);
+		
+		// Process data source file
+		var loader = new GlideImportSetLoader();
+		var importSetRec = loader.getImportSetGr(dataSource);
+		var ranload = loader.loadImportSetTable(importSetRec, dataSource);
+		importSetRec.state = "loaded";
+		importSetRec.update();
+		
+		// Transform import set
+		var transformWorker = new GlideImportSetTransformerWorker(importSetRec.sys_id, transformMapIDs);
+		transformWorker.setBackground(true);
+		transformWorker.start();
+		}
+		catch(err){gs.log("Error detected in SI: EmailFileImportUtils, Function: loadImportSet " +err.message);}
+	},
+	
+	type: 'EmailFileImportUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-12-12 13:25:57</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>83d188300fcb0300c0c588cce1050ec4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>EmailFileImportUtils</sys_name>
+        <sys_package display_value="Email Import" source="x_17179_email_impo">b14144fc0f4b0300c0c588cce1050ee6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Email Import">b14144fc0f4b0300c0c588cce1050ee6</sys_scope>
+        <sys_update_name>sys_script_include_83d188300fcb0300c0c588cce1050ec4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-12-12 13:25:57</sys_updated_on>
+    </sys_script_include>
+</record_update>

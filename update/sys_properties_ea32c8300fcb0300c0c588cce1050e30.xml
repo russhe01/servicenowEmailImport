@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Transform map(s) to be used. NOTE: Multiple can be applied by comma seperated with NO spaces</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_17179_email_impo.email.attachment.transform.map</name>
+        <read_roles/>
+        <suffix>email.attachment.transform.map</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-12-12 13:27:46</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>ea32c8300fcb0300c0c588cce1050e30</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_17179_email_impo.email.attachment.transform.map</sys_name>
+        <sys_package display_value="Email Import" source="x_17179_email_impo">b14144fc0f4b0300c0c588cce1050ee6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Email Import">b14144fc0f4b0300c0c588cce1050ee6</sys_scope>
+        <sys_update_name>sys_properties_ea32c8300fcb0300c0c588cce1050e30</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-12-12 13:37:48</sys_updated_on>
+        <type>string</type>
+        <value>c8c3c4700fcb0300c0c588cce1050efd</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=ea32c8300fcb0300c0c588cce1050e30"/>
+</record_update>
